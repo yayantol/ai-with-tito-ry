@@ -49,6 +49,14 @@ async function getPageData() {
 
 // ── NAV ────────────────────────────────────────────────────────────────────
 function Nav({ cm }: { cm: ContentMap }) {
+  const navLinks = [
+    { label: c(cm, "nav_link1_label", "About"),        url: c(cm, "nav_link1_url", "#about") },
+    { label: c(cm, "nav_link2_label", "Services"),     url: c(cm, "nav_link2_url", "#services") },
+    { label: c(cm, "nav_link3_label", "How It Works"), url: c(cm, "nav_link3_url", "#how-it-works") },
+    { label: c(cm, "nav_link4_label", "Topics"),       url: c(cm, "nav_link4_url", "#topics") },
+  ];
+  const siteName = c(cm, "site_name", "AI Automation with Tito Ry");
+  const [namePart1, namePart2] = siteName.includes(" with ") ? siteName.split(" with ") : [siteName, ""];
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 py-4 bg-navy/90 backdrop-blur-md border-b border-brand-blue/15">
       <a href="#" className="flex items-center gap-3 no-underline">
@@ -56,27 +64,18 @@ function Nav({ cm }: { cm: ContentMap }) {
           AR
         </div>
         <div className="font-poppins font-bold text-sm leading-tight text-white">
-          AI Automation
-          <br />
-          <span className="text-brand-blue">with Tito Ry</span>
+          {namePart1}
+          {namePart2 && <><br /><span className="text-brand-blue">with {namePart2}</span></>}
         </div>
       </a>
       <ul className="hidden md:flex gap-8 list-none">
-        {["About", "Services", "How It Works", "Topics"].map((item) => (
-          <li key={item}>
-            <a
-              href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-              className="text-slate-300 text-sm font-medium hover:text-brand-bright transition-colors no-underline"
-            >
-              {item}
-            </a>
+        {navLinks.filter((l) => l.label).map((item) => (
+          <li key={item.label}>
+            <a href={item.url} className="text-slate-300 text-sm font-medium hover:text-brand-bright transition-colors no-underline">{item.label}</a>
           </li>
         ))}
         <li>
-          <a
-            href={c(cm, "nav_cta_url", "#cta")}
-            className="bg-brand-blue text-white px-5 py-2 rounded-md text-sm font-semibold hover:bg-brand-bright hover:text-navy transition-colors no-underline"
-          >
+          <a href={c(cm, "nav_cta_url", "#cta")} className="bg-brand-blue text-white px-5 py-2 rounded-md text-sm font-semibold hover:bg-brand-bright hover:text-navy transition-colors no-underline">
             {c(cm, "nav_cta_text", "Get Started")}
           </a>
         </li>
@@ -147,9 +146,11 @@ function Hero({ cm }: { cm: ContentMap }) {
             <div className="absolute -inset-[2px] bg-gradient-to-br from-brand-blue via-transparent to-brand-bright rounded-[20px] z-[-1]" />
             <div className="absolute top-5 -right-5 w-full h-full bg-brand-blue/10 rounded-[20px] z-[-2]" />
             <Image src="/hero-photo.png" alt="Tito Ry — AI Automation Expert" width={460} height={520} className="w-full h-[480px] object-cover object-top rounded-[18px] block" priority />
-            <div className="absolute -bottom-5 -left-5 bg-gradient-to-br from-navy-mid to-navy-light border border-brand-blue/30 rounded-xl px-5 py-3 shadow-xl">
-              <p className="font-poppins font-bold text-xs text-brand-bright uppercase tracking-[2px] m-0">⚡ Automate · Elevate · Dominate</p>
-            </div>
+            {c(cm, "hero_photo_badge", "⚡ Automate · Elevate · Dominate") && (
+              <div className="absolute -bottom-5 -left-5 bg-gradient-to-br from-navy-mid to-navy-light border border-brand-blue/30 rounded-xl px-5 py-3 shadow-xl">
+                <p className="font-poppins font-bold text-xs text-brand-bright uppercase tracking-[2px] m-0">{c(cm, "hero_photo_badge", "⚡ Automate · Elevate · Dominate")}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -205,6 +206,11 @@ function About({ cm }: { cm: ContentMap }) {
           ))}</SectionTitle>
           <p className="text-slate-300 leading-relaxed mb-4">{c(cm, "about_para1", "I'm Tito Ry — an AI automation educator and practitioner dedicated to helping entrepreneurs, business owners, and professionals use AI to work smarter, not harder.")}</p>
           <p className="text-slate-300 leading-relaxed mb-6">{c(cm, "about_para2", "Whether you're just getting started with AI tools or ready to build full-scale automation pipelines, I break it down into simple, actionable steps you can implement today.")}</p>
+          {c(cm, "about_cta_text", "") && (
+            <a href={c(cm, "about_cta_url", "#")} className="inline-block bg-blue-gradient text-white px-7 py-3 rounded-lg font-poppins font-bold text-sm no-underline hover:opacity-90 hover:-translate-y-0.5 transition-all mb-6">
+              {c(cm, "about_cta_text", "")}
+            </a>
+          )}
           <div className="grid grid-cols-2 gap-3 mt-6">
             {pillars.map((p) => (
               <div key={p.title} className="bg-white/[0.03] border border-white/8 rounded-xl p-4 hover:border-brand-blue/40 hover:bg-brand-blue/6 transition-all">
@@ -230,12 +236,14 @@ function About({ cm }: { cm: ContentMap }) {
 
 // ── SERVICES ───────────────────────────────────────────────────────────────
 function Services({ cm }: { cm: ContentMap }) {
+  const featuredNum = c(cm, "service_featured", "2");
   const services = [1,2,3,4,5,6].map((n) => ({
     icon:     c(cm, `service${n}_icon`,  ["🎓","⚙️","🤖","📢","💬","🛠️"][n-1]),
     title:    c(cm, `service${n}_title`, ["AI Education & Training","Business Automation","AI Agent Building","Content & YouTube","Community & Coaching","Done-For-You Systems"][n-1]),
     desc:     c(cm, `service${n}_desc`,  ""),
-    featured: n === 2,
-    tags:     [["ChatGPT","Claude","Gemini"],["n8n","Make","Zapier"],["Agents","Agentic Flows"],["YouTube","Tutorials"],["Community","1-on-1"],["Custom Builds","DFY"]][n-1],
+    url:      c(cm, `service${n}_url`,   "#"),
+    featured: featuredNum === String(n),
+    tags:     (c(cm, `service${n}_tags`, ["ChatGPT,Claude,Gemini","n8n,Make,Zapier","Agents,Agentic Flows","YouTube,Tutorials","Community,1-on-1","Custom Builds,DFY"][n-1])).split(",").map((t) => t.trim()).filter(Boolean),
   }));
   return (
     <section id="services" className="py-24 px-6 md:px-10 bg-gradient-to-b from-navy to-navy-mid">
@@ -247,7 +255,7 @@ function Services({ cm }: { cm: ContentMap }) {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {services.map((s) => (
-            <div key={s.title} className={`relative rounded-2xl p-7 border transition-all hover:-translate-y-1.5 ${s.featured ? "border-brand-blue bg-brand-blue/8" : "border-white/7 bg-white/[0.03] hover:border-brand-blue/40 hover:bg-brand-blue/5"}`}>
+            <a key={s.title} href={s.url !== "#" ? s.url : undefined} className={`relative rounded-2xl p-7 border transition-all hover:-translate-y-1.5 no-underline text-white block ${s.featured ? "border-brand-blue bg-brand-blue/8" : "border-white/7 bg-white/[0.03] hover:border-brand-blue/40 hover:bg-brand-blue/5"}`}>
               {s.featured && <span className="absolute top-4 right-4 bg-brand-blue text-white text-[10px] font-bold tracking-widest uppercase px-2 py-0.5 rounded">Popular</span>}
               <div className="w-12 h-12 rounded-xl bg-brand-blue/15 border border-brand-blue/30 flex items-center justify-center text-2xl mb-5">{s.icon}</div>
               <h3 className="font-poppins font-bold text-lg mb-2.5">{s.title}</h3>
@@ -255,7 +263,7 @@ function Services({ cm }: { cm: ContentMap }) {
               <div className="flex flex-wrap gap-1.5">
                 {s.tags.map((t) => (<span key={t} className="bg-brand-blue/12 border border-brand-blue/25 text-brand-bright text-[11px] font-semibold px-2.5 py-0.5 rounded-full">{t}</span>))}
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
@@ -303,6 +311,7 @@ function Topics({ cm }: { cm: ContentMap }) {
     icon:  c(cm, `topic${n}_icon`,  defaultIcons[n-1]),
     title: c(cm, `topic${n}_title`, defaultTitles[n-1]),
     desc:  c(cm, `topic${n}_desc`,  ""),
+    url:   c(cm, `topic${n}_url`,   "#"),
   }));
   return (
     <section id="topics" className="py-24 px-6 md:px-10 bg-navy-mid">
@@ -314,11 +323,11 @@ function Topics({ cm }: { cm: ContentMap }) {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {topics.map((t) => (
-            <div key={t.title} className="bg-navy border border-white/6 rounded-2xl p-5 hover:border-brand-blue/35 hover:-translate-y-1 transition-all">
+            <a key={t.title} href={t.url !== "#" ? t.url : undefined} className="bg-navy border border-white/6 rounded-2xl p-5 hover:border-brand-blue/35 hover:-translate-y-1 transition-all no-underline text-white block">
               <span className="text-3xl block mb-3">{t.icon}</span>
               <h4 className="font-poppins font-bold text-sm mb-1.5">{t.title}</h4>
               <p className="text-xs text-slate-400 leading-relaxed">{t.desc}</p>
-            </div>
+            </a>
           ))}
         </div>
       </div>
@@ -397,7 +406,7 @@ function Footer({ navLinks, cm }: { navLinks: NavLink[]; cm: ContentMap }) {
       </div>
       <div className="border-t border-white/5 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-slate-500">
         <span>{c(cm, "footer_copyright", "© 2026 AI Automation with Tito Ry. All rights reserved.")}</span>
-        <span>Built with ⚡ and AI · <a href="#" className="text-brand-bright no-underline">Privacy</a> · <a href="#" className="text-brand-bright no-underline">Terms</a></span>
+        <span>Built with ⚡ and AI · <a href={c(cm, "footer_privacy_url", "#")} className="text-brand-bright no-underline">Privacy</a> · <a href={c(cm, "footer_terms_url", "#")} className="text-brand-bright no-underline">Terms</a></span>
       </div>
     </footer>
   );
