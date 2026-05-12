@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Automation with Tito Ry</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #0D1B2A;
+      --navy-mid:   #0F2236;
+      --navy-light: #1A3A5C;
+      --blue:       #1A7FFF;
+      --blue-bright:#00BFFF;
+      --gold:       #FFB800;
+      --white:      #FFFFFF;
+      --off-white:  #F5F7FA;
+      --gray:       #64748B;
+      --gray-light: #CBD5E1;
+      --radius:     12px;
+      --shadow:     0 8px 32px rgba(0,0,0,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: rgba(13,27,42,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(26,127,255,0.15);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      text-decoration: none;
+    }
+
+    .logo-badge {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-bright));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--white);
+      letter-spacing: -1px;
+    }
+
+    .nav-brand {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    .nav-brand span { color: var(--blue); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      color: var(--gray-light);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--blue-bright); }
+
+    .nav-cta {
+      background: var(--blue);
+      color: var(--white) !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--blue-bright) !important; color: var(--navy) !important; }
+
+    /* ── HERO ───────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 3rem;
+      padding: 8rem 5% 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 60% 50%, rgba(26,127,255,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 90% 10%, rgba(0,191,255,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(26,127,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,127,255,0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 2; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(26,127,255,0.15);
+      border: 1px solid rgba(26,127,255,0.35);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--blue-bright);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--blue-bright);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 .highlight {
+      background: linear-gradient(90deg, var(--blue), var(--blue-bright));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--gray-light);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue), var(--blue-bright));
+      color: var(--white);
+      padding: 0.9rem 2rem;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 20px rgba(26,127,255,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(26,127,255,0.5);
+    }
+
+    .btn-ghost {
+      color: var(--white);
+      padding: 0.9rem 2rem;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--blue);
+      background: rgba(26,127,255,0.08);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .stat-item { }
+
+    .stat-num {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--blue-bright);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--gray);
+      font-weight: 500;
+    }
+
+    /* ── HERO IMAGE ─────────────────────────── */
+    .hero-visual {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-img-frame {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .hero-img-frame::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      background: linear-gradient(135deg, var(--blue), transparent, var(--blue-bright));
+      border-radius: 20px;
+      z-index: -1;
+    }
+
+    .hero-img-frame::after {
+      content: '';
+      position: absolute;
+      top: 20px; right: -20px;
+      width: 100%; height: 100%;
+      background: rgba(26,127,255,0.1);
+      border-radius: 20px;
+      z-index: -2;
+    }
+
+    .hero-img-frame img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 18px;
+      display: block;
+    }
+
+    .hero-tagline-card {
+      position: absolute;
+      bottom: -1.5rem;
+      left: -1.5rem;
+      background: linear-gradient(135deg, var(--navy-mid), var(--navy-light));
+      border: 1px solid rgba(26,127,255,0.3);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-tagline-card p {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--blue-bright);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    /* ── MARQUEE ────────────────────────────── */
+    .marquee-section {
+      background: rgba(26,127,255,0.08);
+      border-top: 1px solid rgba(26,127,255,0.15);
+      border-bottom: 1px solid rgba(26,127,255,0.15);
+      padding: 1rem 0;
+      overflow: hidden;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 3rem;
+      animation: marquee 25s linear infinite;
+      white-space: nowrap;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--blue-bright);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .marquee-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+
+    /* ── SECTIONS SHARED ────────────────────── */
+    section { padding: 5rem 5%; }
+
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blue-bright);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      color: var(--gray-light);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 580px;
+    }
+
+    .section-header { margin-bottom: 3.5rem; }
+
+    .center { text-align: center; }
+    .center .section-sub { margin: 0 auto; }
+
+    /* ── ABOUT ──────────────────────────────── */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-text {}
+
+    .about-text p {
+      color: var(--gray-light);
+      line-height: 1.8;
+      margin-bottom: 1.25rem;
+    }
+
+    .about-pillars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .pillar {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .pillar:hover {
+      border-color: rgba(26,127,255,0.4);
+      background: rgba(26,127,255,0.06);
+    }
+
+    .pillar-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .pillar h4 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .pillar p {
+      font-size: 0.82rem;
+      color: var(--gray);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .about-visual {
+      background: linear-gradient(135deg, var(--navy-mid), var(--navy-light));
+      border-radius: 20px;
+      padding: 3rem;
+      border: 1px solid rgba(26,127,255,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-visual::before {
+      content: '';
+      position: absolute;
+      top: -50px; right: -50px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(26,127,255,0.2), transparent 70%);
+    }
+
+    .about-logo-big {
+      font-family: 'Poppins', sans-serif;
+      font-size: 5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--blue), var(--blue-bright));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .about-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 1px;
+    }
+
+    .about-tagline {
+      font-size: 0.85rem;
+      color: var(--gray);
+      margin-top: 0.25rem;
+    }
+
+    .about-divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--blue-bright));
+      border-radius: 2px;
+      margin: 1.5rem 0;
+    }
+
+    .about-quote {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--gray-light);
+      line-height: 1.6;
+    }
+
+    .about-quote strong { color: var(--blue-bright); font-style: normal; }
+
+    /* ── SERVICES ───────────────────────────── */
+    .services-bg {
+      background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 100%);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s, border-color 0.25s, background 0.25s;
+      cursor: default;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(26,127,255,0.4);
+      background: rgba(26,127,255,0.05);
+    }
+
+    .service-card.featured {
+      border-color: var(--blue);
+      background: rgba(26,127,255,0.08);
+    }
+
+    .service-card.featured::after {
+      content: 'POPULAR';
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: var(--blue);
+      color: var(--white);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, rgba(26,127,255,0.2), rgba(0,191,255,0.1));
+      border: 1px solid rgba(26,127,255,0.3);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .service-card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--gray-light);
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      background: rgba(26,127,255,0.12);
+      border: 1px solid rgba(26,127,255,0.25);
+      color: var(--blue-bright);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+    }
+
+    /* ── HOW IT WORKS ───────────────────────── */
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      position: relative;
+    }
+
+    .how-grid::before {
+      content: '';
+      position: absolute;
+      top: 36px; left: 10%;
+      width: 80%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    }
+
+    .how-step {
+      text-align: center;
+      padding: 1.5rem 1rem;
+    }
+
+    .step-num {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, var(--navy-light), var(--navy-mid));
+      border: 2px solid rgba(26,127,255,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.25rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-num span {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--blue), var(--blue-bright));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .how-step h4 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .how-step p {
+      font-size: 0.875rem;
+      color: var(--gray-light);
+      line-height: 1.6;
+    }
+
+    /* ── TOPICS / CONTENT ───────────────────── */
+    .topics-section { background: var(--navy-mid); }
+
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    .topic-card {
+      background: var(--navy);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .topic-card:hover {
+      border-color: rgba(26,127,255,0.35);
+      transform: translateY(-4px);
+    }
+
+    .topic-icon {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    .topic-card h4 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .topic-card p {
+      font-size: 0.82rem;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    /* ── TESTIMONIALS ───────────────────────── */
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .testi-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: border-color 0.2s;
+    }
+
+    .testi-card:hover { border-color: rgba(26,127,255,0.3); }
+
+    .testi-stars {
+      color: var(--gold);
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+
+    .testi-card blockquote {
+      font-size: 0.95rem;
+      color: var(--gray-light);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .author-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--blue-bright));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .author-info strong {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      display: block;
+    }
+
+    .author-info span {
+      font-size: 0.78rem;
+      color: var(--gray);
+    }
+
+    /* ── CTA SECTION ────────────────────────── */
+    .cta-section {
+      background: linear-gradient(135deg, #0F2236 0%, #0D1B2A 60%, #0A2040 100%);
+      border-top: 1px solid rgba(26,127,255,0.2);
+      border-bottom: 1px solid rgba(26,127,255,0.2);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(26,127,255,0.15), transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-section .section-title { max-width: 700px; margin: 0 auto 1rem; }
+    .cta-section .section-sub { margin: 0 auto 2.5rem; }
+
+    .cta-form {
+      display: flex;
+      gap: 0.75rem;
+      max-width: 480px;
+      margin: 0 auto 1.25rem;
+    }
+
+    .cta-form input {
+      flex: 1;
+      padding: 0.9rem 1.25rem;
+      border-radius: 8px;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .cta-form input::placeholder { color: var(--gray); }
+    .cta-form input:focus { border-color: var(--blue); }
+
+    .cta-form button {
+      padding: 0.9rem 1.75rem;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-bright));
+      color: var(--white);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .cta-form button:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    .cta-note {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    /* ── FOOTER ─────────────────────────────── */
+    footer {
+      background: #090F1A;
+      padding: 3.5rem 5% 2rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand .nav-logo { margin-bottom: 1rem; }
+
+    .footer-brand p {
+      font-size: 0.875rem;
+      color: var(--gray);
+      line-height: 1.7;
+      max-width: 260px;
+      margin-bottom: 1.25rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .social-link {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .social-link:hover {
+      background: rgba(26,127,255,0.15);
+      border-color: rgba(26,127,255,0.4);
+    }
+
+    .footer-col h5 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1rem;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-col ul { list-style: none; }
+
+    .footer-col ul li { margin-bottom: 0.6rem; }
+
+    .footer-col ul a {
+      text-decoration: none;
+      color: var(--gray);
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul a:hover { color: var(--blue-bright); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    .footer-bottom a { color: var(--blue-bright); text-decoration: none; }
+
+    /* ── RESPONSIVE ─────────────────────────── */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .topics-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 6rem;
+      }
+      .hero-visual { order: -1; }
+      .hero p { margin: 0 auto 2.5rem; }
+      .hero-cta-group { justify-content: center; }
+      .hero-stats { justify-content: center; }
+      .hero-tagline-card { display: none; }
+      .about { grid-template-columns: 1fr; gap: 2rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .how-grid { grid-template-columns: 1fr 1fr; }
+      .how-grid::before { display: none; }
+      .topics-grid { grid-template-columns: 1fr 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .cta-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <div class="logo-badge">AR</div>
+      <div class="nav-brand">AI Automation<br><span>with Tito Ry</span></div>
+    </a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#topics">Topics</a></li>
+      <li><a href="#cta" class="nav-cta">Get Started</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="grid-overlay"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">🤖 AI Automation Expert</div>
+      <h1>
+        Think.<br>
+        <span class="highlight">Automate.</span><br>
+        Succeed.
+      </h1>
+      <p>
+        Learn how to harness the power of AI to automate your business,
+        eliminate repetitive tasks, and scale what matters — with Tito Ry
+        as your guide.
+      </p>
+      <div class="hero-cta-group">
+        <a href="#cta" class="btn-primary">
+          Start Automating →
+        </a>
+        <a href="#services" class="btn-ghost">
+          ▶ See How It Works
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-num">10K+</span>
+          <span class="stat-label">Community Members</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">50+</span>
+          <span class="stat-label">Automations Built</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Practical & Real</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-img-frame">
+        <img
+          src="brand_assets/ChatGPT Image May 11, 2026, 10_38_51 PM.png"
+          alt="Tito Ry — AI Automation Expert"
+        />
+        <div class="hero-tagline-card">
+          <p>⚡ Automate · Elevate · Dominate</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-section">
+    <div class="marquee-track">
+      <span class="marquee-item"><span class="marquee-dot"></span>AI Automation</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>ChatGPT &amp; Claude</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>n8n Workflows</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Make (Integromat)</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Zapier</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>AI Agents</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Business Automation</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Prompt Engineering</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>AI Automation</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>ChatGPT &amp; Claude</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>n8n Workflows</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Make (Integromat)</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Zapier</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>AI Agents</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Business Automation</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Prompt Engineering</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about" style="padding: 6rem 5%;">
+    <div class="about">
+      <div class="about-text">
+        <p class="section-label">About Tito Ry</p>
+        <h2 class="section-title">Building Intelligent Systems.<br>Empowering Real People.</h2>
+        <p>
+          I'm Tito Ry — an AI automation educator and practitioner dedicated to
+          helping entrepreneurs, business owners, and professionals use AI to
+          work smarter, not harder.
+        </p>
+        <p>
+          Whether you're just getting started with AI tools or ready to build
+          full-scale automation pipelines, I break it down into simple, actionable
+          steps you can implement today.
+        </p>
+        <div class="about-pillars">
+          <div class="pillar">
+            <span class="pillar-icon">🧠</span>
+            <h4>Clear & Simple</h4>
+            <p>No fluff. Just what works.</p>
+          </div>
+          <div class="pillar">
+            <span class="pillar-icon">⚡</span>
+            <h4>Empowering</h4>
+            <p>Tools you can use right now.</p>
+          </div>
+          <div class="pillar">
+            <span class="pillar-icon">🤝</span>
+            <h4>Trusted</h4>
+            <p>Proven strategies, real results.</p>
+          </div>
+          <div class="pillar">
+            <span class="pillar-icon">🚀</span>
+            <h4>Innovative</h4>
+            <p>Always on the cutting edge.</p>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual">
+        <span class="about-logo-big">AR</span>
+        <div class="about-name">AI AUTOMATION WITH TITO RY</div>
+        <div class="about-tagline">Building intelligent systems. Automating success. Empowering growth.</div>
+        <div class="about-divider"></div>
+        <p class="about-quote">
+          "AI isn't here to replace you — it's here to <strong>multiply you</strong>.
+          Let's build that future together."
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="services-bg" style="padding: 6rem 5%;">
+    <div class="section-header center">
+      <p class="section-label">What I Offer</p>
+      <h2 class="section-title">Everything You Need to<br>Automate &amp; Grow</h2>
+      <p class="section-sub">From beginner tutorials to advanced agent systems — I've got you covered at every level.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🎓</div>
+        <h3>AI Education &amp; Training</h3>
+        <p>Step-by-step courses and tutorials on AI tools, prompt engineering, and automation fundamentals for all skill levels.</p>
+        <div class="service-tags">
+          <span class="tag">ChatGPT</span>
+          <span class="tag">Claude</span>
+          <span class="tag">Gemini</span>
+        </div>
+      </div>
+      <div class="service-card featured">
+        <div class="service-icon">⚙️</div>
+        <h3>Business Automation</h3>
+        <p>Build powerful no-code and low-code workflows that save hours every week and eliminate manual, repetitive tasks.</p>
+        <div class="service-tags">
+          <span class="tag">n8n</span>
+          <span class="tag">Make</span>
+          <span class="tag">Zapier</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🤖</div>
+        <h3>AI Agent Building</h3>
+        <p>Design and deploy autonomous AI agents that research, write, decide, and act on your behalf — 24/7.</p>
+        <div class="service-tags">
+          <span class="tag">Agents</span>
+          <span class="tag">Agentic Flows</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📢</div>
+        <h3>Content &amp; YouTube</h3>
+        <p>Weekly videos breaking down the latest AI tools, automation walkthroughs, and business use cases you can apply immediately.</p>
+        <div class="service-tags">
+          <span class="tag">YouTube</span>
+          <span class="tag">Tutorials</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💬</div>
+        <h3>Community &amp; Coaching</h3>
+        <p>Join a thriving community of AI-forward thinkers. Get personalized guidance and peer support on your automation journey.</p>
+        <div class="service-tags">
+          <span class="tag">Community</span>
+          <span class="tag">1-on-1</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🛠️</div>
+        <h3>Done-For-You Systems</h3>
+        <p>Custom AI automation systems built for your specific business — from lead generation to content pipelines and beyond.</p>
+        <div class="service-tags">
+          <span class="tag">Custom Builds</span>
+          <span class="tag">Done-For-You</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" style="padding: 6rem 5%;">
+    <div class="section-header center">
+      <p class="section-label">The Process</p>
+      <h2 class="section-title">From Zero to<br>Fully Automated</h2>
+      <p class="section-sub">A proven 4-step system to transform how you work with AI.</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="step-num"><span>01</span></div>
+        <h4>Learn the Fundamentals</h4>
+        <p>Understand how AI tools work and where automation creates the most value in your business.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num"><span>02</span></div>
+        <h4>Identify Your Bottlenecks</h4>
+        <p>Pinpoint the repetitive, time-draining tasks that are holding you back from scaling.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num"><span>03</span></div>
+        <h4>Build Your Automations</h4>
+        <p>Follow step-by-step walkthroughs to connect your tools and create workflows that run themselves.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num"><span>04</span></div>
+        <h4>Scale &amp; Dominate</h4>
+        <p>Layer advanced AI agents on top to create systems that grow with your business automatically.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOPICS -->
+  <section id="topics" class="topics-section" style="padding: 6rem 5%;">
+    <div class="section-header center">
+      <p class="section-label">Content Topics</p>
+      <h2 class="section-title">What You'll Master</h2>
+      <p class="section-sub">Deep dives into the tools and strategies powering the AI automation revolution.</p>
+    </div>
+    <div class="topics-grid">
+      <div class="topic-card">
+        <span class="topic-icon">✍️</span>
+        <h4>Prompt Engineering</h4>
+        <p>Get precise, powerful outputs from any AI model with proven prompting frameworks.</p>
+      </div>
+      <div class="topic-card">
+        <span class="topic-icon">🔗</span>
+        <h4>Workflow Automation</h4>
+        <p>n8n, Make, and Zapier walkthroughs for real business automation scenarios.</p>
+      </div>
+      <div class="topic-card">
+        <span class="topic-icon">🤖</span>
+        <h4>AI Agents</h4>
+        <p>Build multi-step autonomous agents that research, draft, and take action on your behalf.</p>
+      </div>
+      <div class="topic-card">
+        <span class="topic-icon">📊</span>
+        <h4>Business Systems</h4>
+        <p>CRM automation, lead gen pipelines, client onboarding, and reporting — all on autopilot.</p>
+      </div>
+      <div class="topic-card">
+        <span class="topic-icon">🎨</span>
+        <h4>AI Content Creation</h4>
+        <p>Images, videos, scripts, and social posts generated and published with minimal effort.</p>
+      </div>
+      <div class="topic-card">
+        <span class="topic-icon">📬</span>
+        <h4>Email &amp; Outreach</h4>
+        <p>Personalized AI-driven email sequences that nurture leads and close deals automatically.</p>
+      </div>
+      <div class="topic-card">
+        <span class="topic-icon">🧩</span>
+        <h4>API &amp; Integrations</h4>
+        <p>Connect any tool to any other tool — no limits on what you can automate.</p>
+      </div>
+      <div class="topic-card">
+        <span class="topic-icon">💡</span>
+        <h4>AI Strategy</h4>
+        <p>Think bigger — how to redesign your entire business around AI-first principles.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section style="padding: 6rem 5%;">
+    <div class="section-header center">
+      <p class="section-label">Community Love</p>
+      <h2 class="section-title">Real People.<br>Real Results.</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>"Tito Ry's tutorials are the clearest AI content I've found. I built my first automation in a weekend and saved 8 hours a week immediately."</blockquote>
+        <div class="testi-author">
+          <div class="author-avatar">JM</div>
+          <div class="author-info">
+            <strong>James M.</strong>
+            <span>Online Business Owner</span>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>"I went from AI-curious to AI-confident. The way he breaks down complex tools into simple steps is unmatched. My team now runs on automation."</blockquote>
+        <div class="testi-author">
+          <div class="author-avatar">SA</div>
+          <div class="author-info">
+            <strong>Sofia A.</strong>
+            <span>Marketing Agency Founder</span>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>"The n8n automation walkthrough alone was worth it. I automated our entire client intake process — what used to take 3 hours now takes 5 minutes."</blockquote>
+        <div class="testi-author">
+          <div class="author-avatar">RK</div>
+          <div class="author-info">
+            <strong>Ryan K.</strong>
+            <span>Consultant &amp; Coach</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta" class="cta-section">
+    <p class="section-label">Join the Movement</p>
+    <h2 class="section-title">Ready to Automate,<br>Elevate &amp; Dominate?</h2>
+    <p class="section-sub">
+      Join thousands learning how to use AI to reclaim their time, scale their business,
+      and stay ahead of the curve. Free tips, tutorials, and tools — straight to your inbox.
+    </p>
+    <form class="cta-form" onsubmit="return false;">
+      <input type="email" placeholder="Enter your email address" />
+      <button type="submit">Join Free →</button>
+    </form>
+    <p class="cta-note">No spam. Unsubscribe anytime. 100% free.</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" style="display:inline-flex; margin-bottom:1rem;">
+          <div class="logo-badge">AR</div>
+          <div class="nav-brand" style="margin-left:0.65rem;">AI Automation<br><span style="color:var(--blue);">with Tito Ry</span></div>
+        </a>
+        <p>Building intelligent systems. Automating success. Empowering growth — one automation at a time.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" title="YouTube">▶</a>
+          <a href="#" class="social-link" title="LinkedIn">in</a>
+          <a href="#" class="social-link" title="Twitter/X">𝕏</a>
+          <a href="#" class="social-link" title="Facebook">f</a>
+          <a href="#" class="social-link" title="Instagram">📸</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Learn</h5>
+        <ul>
+          <li><a href="#">Free Tutorials</a></li>
+          <li><a href="#">YouTube Channel</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Tools</h5>
+        <ul>
+          <li><a href="#">n8n Workflows</a></li>
+          <li><a href="#">Make Templates</a></li>
+          <li><a href="#">Prompt Library</a></li>
+          <li><a href="#">AI Agent Kits</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Connect</h5>
+        <ul>
+          <li><a href="#">Community</a></li>
+          <li><a href="#">1-on-1 Coaching</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Partner with Me</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 AI Automation with Tito Ry. All rights reserved.</span>
+      <span>Built with ⚡ and AI · <a href="#">Privacy</a> · <a href="#">Terms</a></span>
+    </div>
+  </footer>
+
+</body>
+</html>
