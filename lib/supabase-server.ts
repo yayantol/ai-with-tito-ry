@@ -23,3 +23,14 @@ export type NavLink = {
   url: string;
   sort_order: number;
 };
+
+export type SiteContent = {
+  key: string;
+  value: string;
+  type: string;
+  label: string;
+  section: string;
+  options: string | null;
+};
+
+export type ContentMap = Record<string, string>;

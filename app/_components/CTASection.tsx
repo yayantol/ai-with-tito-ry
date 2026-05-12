@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import type { ContentMap } from "@/lib/supabase-server";
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return <p className="text-brand-bright text-xs font-bold uppercase tracking-[3px] mb-3">{children}</p>;
@@ -12,10 +13,15 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function CTASection() {
+export function CTASection({ content = {} }: { content?: ContentMap }) {
   const [email, setEmail]   = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error" | "dupe">("idle");
   const [msg, setMsg]       = useState("");
+
+  const label      = content["cta_label"]       ?? "Join the Movement";
+  const title      = content["cta_title"]        ?? "Ready to Automate, Elevate & Dominate?";
+  const desc       = content["cta_desc"]         ?? "Join thousands learning how to use AI to reclaim their time, scale their business, and stay ahead of the curve. Free tips, tutorials, and tools.";
+  const buttonText = content["cta_button_text"]  ?? "Join Free →";
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -44,12 +50,9 @@ export function CTASection() {
     <section id="cta" className="relative py-24 px-6 md:px-10 text-center bg-gradient-to-br from-navy-mid via-navy to-[#0A2040] border-y border-brand-blue/20 overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-brand-blue/15 rounded-full blur-[80px] pointer-events-none" />
       <div className="relative max-w-2xl mx-auto">
-        <SectionLabel>Join the Movement</SectionLabel>
-        <SectionTitle>Ready to Automate,<br />Elevate &amp; Dominate?</SectionTitle>
-        <p className="text-slate-300 text-lg mb-8 max-w-xl mx-auto">
-          Join thousands learning how to use AI to reclaim their time, scale their business,
-          and stay ahead of the curve. Free tips, tutorials, and tools.
-        </p>
+        <SectionLabel>{label}</SectionLabel>
+        <SectionTitle>{title}</SectionTitle>
+        <p className="text-slate-300 text-lg mb-8 max-w-xl mx-auto">{desc}</p>
 
         {status === "success" ? (
           <div className="bg-brand-blue/15 border border-brand-blue/40 rounded-xl px-6 py-4 max-w-md mx-auto mb-4">
@@ -70,7 +73,7 @@ export function CTASection() {
               disabled={status === "loading"}
               className="bg-blue-gradient text-white px-7 py-3.5 rounded-lg font-poppins font-bold text-sm whitespace-nowrap hover:opacity-90 hover:-translate-y-0.5 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {status === "loading" ? "Joining…" : "Join Free →"}
+              {status === "loading" ? "Joining…" : buttonText}
             </button>
           </form>
         )}
